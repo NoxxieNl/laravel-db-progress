@@ -36,10 +36,10 @@ Simply add this code at the end of your ``app/config/database.php`` file:
 
     'progress' => [
         'driver' => 'progress',
-        'username' => 'SYSTEEM',
-        'password' => 'SYSTEEM',
-        'owner' => 'PUB',
-        'driverName' => 'dosbvd_x32',
+        'username' => '',
+        'password' => '',
+        'owner' => '',
+        'driverName' => '',
         'options' => [
             PDO::ATTR_CASE => PDO::CASE_LOWER
         ]
