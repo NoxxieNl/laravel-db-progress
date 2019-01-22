@@ -74,13 +74,10 @@ class ProgressConnection extends Connection
             $defaultGrammar->setDateFormat($this->config['date_format']);
         }
 
-        // Set owner if any specified in config
-        if (array_key_exists('owner', $this->config)) {
-            $defaultGrammar->setOwner($this->config['owner']);
-        }
+        // Set config option for owner if none specified revert to null
+        $defaultGrammar->setOwner(array_key_exists('owner', $this->config) ? $this->config['owner'] : null);
 
         // Set config option if minus sign in column names must be converted
-        // Default is true
         $defaultGrammar->setColumnConversion(array_key_exists('convert_minus_columns', $this->config) ? $this->config['convert_minus_columns'] : true);
 
         return $this->withTablePrefix($defaultGrammar);

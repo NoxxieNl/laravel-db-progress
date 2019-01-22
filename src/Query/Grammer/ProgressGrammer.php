@@ -121,7 +121,7 @@ class ProgressGrammer extends Grammar
         $select = $query->distinct ? 'select distinct ' : 'select ';
 
         if ($query->limit) {
-            $select .= 'top '.$query->limit .' ';
+            $select .= 'top '.$query->limit.' ';
         }
        
         return $select.$this->columnize($columns);
@@ -199,47 +199,6 @@ class ProgressGrammer extends Grammar
     }
 
     /**
-     * Compile a common table expression for a query.
-     *
-     * @param string $sql
-     * @param string $constraint
-     *
-     * @return string
-     */
-    protected function compileTableExpression($sql, $constraint)
-    {
-        return "select * from ({$sql}) as temp_table where row_num {$constraint}";
-    }
-
-    /**
-     * Compile the "offset" portions of the query.
-     *
-     * @param \Illuminate\Database\Query\Builder $query
-     * @param int                                $offset
-     *
-     * @return string
-     */
-    protected function compileOffset(Builder $query, $offset)
-    {
-        return '';
-    }
-
-    /**
-     * Compile an exists statement into SQL.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @return string
-     */
-    public function compileExists(Builder $query)
-    {
-        $existsQuery = clone $query;
-
-        $existsQuery->columns = [];
-
-        return $this->compileSelect($existsQuery->selectRaw('1')->limit(1));
-    }
-
-    /**
      * Get the format for database stored dates.
      *
      * @return string
@@ -257,17 +216,6 @@ class ProgressGrammer extends Grammar
     public function setDateFormat($dateFormat)
     {
         $this->dateFormat = $dateFormat;
-    }
-
-    /**
-     * Compile the SQL statement to define a savepoint.
-     *
-     * @param  string  $name
-     * @return string
-     */
-    public function compileSavepoint($name)
-    {
-        return 'SAVEPOINT '.$name.' ON ROLLBACK RETAIN CURSORS';
     }
 
     /**
@@ -299,10 +247,14 @@ class ProgressGrammer extends Grammar
      */
     protected function getOwnerPrefix()
     {
-        if (strpos($this->owner, '.') === false) {
-            return $this->owner.'.';
-        } else {
-            return $this->owner;
+        if ($this->owner) {
+            if (strpos($this->owner, '.') === false) {
+                return $this->owner.'.';
+            } else {
+                return $this->owner;
+            }
         }
+
+        return '';
     }
 }
