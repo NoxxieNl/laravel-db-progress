@@ -1,7 +1,7 @@
 # Progress
 
 
-Progress is a simple odbc progres service provider for Laravel. It provides odbc Connection by extending the Illuminate Database component of the laravel framework.
+Progress is a simple odbc progress service provider for Laravel. It provides odbc Connection by extending the Illuminate Database component of the laravel framework.
 
 ---
 
