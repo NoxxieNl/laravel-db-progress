@@ -1,5 +1,8 @@
 # Progress
-
+[![Latest Stable Version](https://poser.pugx.org/noxxie/progress/v/stable)](https://packagist.org/packages/noxxie/progress)
+[![Total Downloads](https://poser.pugx.org/noxxie/progress/downloads)](https://packagist.org/packages/noxxie/progress)
+[![Latest Unstable Version](https://poser.pugx.org/noxxie/progress/v/unstable)](https://packagist.org/packages/noxxie/progress)
+[![License](https://poser.pugx.org/noxxie/progress/license)](https://packagist.org/packages/noxxie/progress)
 
 Progress is a simple odbc progress service provider for Laravel. It provides odbc Connection by extending the Illuminate Database component of the laravel framework.
 
