@@ -25,6 +25,13 @@ class ProgressGrammer extends Grammar
     protected $owner;
 
     /**
+     * Columnconversion
+     * 
+     * @var bool
+     */
+    protected $columnConversion;
+
+    /**
      * Wrap a single string in keyword identifiers.
      *
      * @param string $value
@@ -147,10 +154,15 @@ class ProgressGrammer extends Grammar
 
                 // Explode column and set the escaping
                 $columnPartials = explode('.', $value);
-                return $columnPartials[0].'."'.$columnPartials[1].'"';  
+
+                return  $this->columnConversion ?
+                        $columnPartials[0].'."'.$columnPartials[1].'" as ' . str_replace('-', '_', $columnPartials[1]) : 
+                        $columnPartials[0].'."'.$columnPartials[1].'"';            
             } else {
                 // Just set the escaping no aliasing found
-                return '"' . $value . '"';
+                return  $this->columnConversion ? 
+                        '"' . $value . '" as ' . str_replace('-', '_', $value) : 
+                        '"' . $value . '"';
             }
         }
 
@@ -267,6 +279,17 @@ class ProgressGrammer extends Grammar
     public function setOwner(string $owner)
     {
         $this->owner = $owner;
+    }
+
+    /**
+     * Set the owner of the tables (This will be prefixxed before the tables)
+     *
+     * @param bool $conversion
+     * @return void
+     */
+    public function setColumnConversion(bool $conversion)
+    {
+        $this->columnConversion = $conversion;
     }
 
     /**
