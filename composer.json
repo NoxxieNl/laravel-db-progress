@@ -1,0 +1,36 @@
+{
+    "name": "noxxie/progress",
+    "description": "Progress is a simple odbc progres service provider for Laravel. It provides odbc Connection by extending the Illuminate Database component of the laravel framework.",
+    "keywords": [
+        "laravel",
+        "Progress",
+        "Database",
+        "PDO",
+        "ODBC"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Patrick",
+            "email": "patrick@noxxie.nl",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.3",
+        "illuminate/database": "5.7.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Noxxie\\Database\\Progress\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Noxxie\\Database\\Progress\\ProgressServiceProvider"
+            ]
+        }
+    }
+}
