@@ -5,7 +5,7 @@ namespace Noxxie\Database\Progress;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Connection;
 
-use Noxxie\Databse\ProgressConnector;
+use Noxxie\Database\ProgressConnector;
 use Noxxie\Database\ProgressConnection;
 
 class ProgressServiceProvider extends ServiceProvider
