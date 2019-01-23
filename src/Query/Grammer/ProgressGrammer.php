@@ -199,6 +199,27 @@ class ProgressGrammer extends Grammar
     }
 
     /**
+     * Compile a where clause comparing two columns..
+     *
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  array  $where
+     * @return string
+     */
+    protected function whereColumn(Builder $query, $where)
+    {
+        if (strpos($where['first'], '-') !== false) {
+            $partialColumn = explode('.', $where['first']);
+            $where['first'] = $partialColumn[0] . '."' . $partialColumn[1] . '"';
+        }
+
+        if (strpos($where['second'], '-') !== false) {
+            $partialColumn = explode('.', $where['second']);
+            $where['second'] = $partialColumn[0] . '."' . $partialColumn[1] . '"';
+        }
+        return $where['first'].' '.$where['operator'].' '.$where['second'];
+    }
+
+    /**
      * Get the format for database stored dates.
      *
      * @return string
