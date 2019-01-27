@@ -1,15 +1,16 @@
 <?php
+
 namespace Noxxie\Database\Progress;
 
 use Illuminate\Database\Connectors\Connector;
 use Illuminate\Database\Connectors\ConnectorInterface;
 
 /**
- * Class ProgressConnector
+ * Class ProgressConnector.
  */
 class ProgressConnector extends Connector implements ConnectorInterface
 {
-        /**
+    /**
      * @param array $config
      *
      * @return \PDO
@@ -20,6 +21,7 @@ class ProgressConnector extends Connector implements ConnectorInterface
         $options = $this->getOptions($config);
 
         $connection = $this->createConnection($dsn, $config, $options);
+
         return $connection;
     }
 
@@ -31,12 +33,12 @@ class ProgressConnector extends Connector implements ConnectorInterface
     protected function getDsn(array $config)
     {
         $dsnParts = [
-            'odbc:%s'
+            'odbc:%s',
         ];
         $dsnConfig = [
-            $config['driverName']
+            $config['driverName'],
         ];
-        
+
         return sprintf(implode(';', $dsnParts), ...$dsnConfig);
     }
 }

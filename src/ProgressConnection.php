@@ -1,13 +1,13 @@
 <?php
 
 namespace Noxxie\Database\Progress;
-use PDO;
 
 use Illuminate\Database\Connection;
 use Noxxie\Database\Progress\Query\Grammer\ProgressGrammer;
+use PDO;
 
 /**
- * Class ProgressConnection
+ * Class ProgressConnection.
  */
 class ProgressConnection extends Connection
 {
@@ -67,7 +67,7 @@ class ProgressConnection extends Connection
      */
     protected function getDefaultQueryGrammar()
     {
-        $defaultGrammar = new ProgressGrammer;
+        $defaultGrammar = new ProgressGrammer();
 
         // set date format if any specified
         if (array_key_exists('date_format', $this->config)) {

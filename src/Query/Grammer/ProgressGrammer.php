@@ -2,11 +2,11 @@
 
 namespace Noxxie\Database\Progress\Query\Grammer;
 
-use Illuminate\Database\Query\Grammars\Grammar;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Query\Grammars\Grammar;
 
 /**
- * Class ProgressGrammer
+ * Class ProgressGrammer.
  */
 class ProgressGrammer extends Grammar
 {
@@ -18,15 +18,15 @@ class ProgressGrammer extends Grammar
     protected $dateFormat;
 
     /**
-     * The owner of the tables
-     * 
+     * The owner of the tables.
+     *
      * @var string
      */
     protected $owner;
 
     /**
-     * Columnconversion
-     * 
+     * Columnconversion.
+     *
      * @var bool
      */
     protected $columnConversion;
@@ -49,7 +49,7 @@ class ProgressGrammer extends Grammar
 
     /**
      * The compile limit function is already checked in the compileColumns function
-     * return blank for this
+     * return blank for this.
      *
      * @param \Illuminate\Database\Query\Builder $query
      * @param int                                $limit
@@ -70,7 +70,6 @@ class ProgressGrammer extends Grammar
      */
     public function compileSelect(Builder $query)
     {
-
         if (is_null($query->columns)) {
             $query->columns = ['*'];
         }
@@ -79,12 +78,13 @@ class ProgressGrammer extends Grammar
 
         return $this->concatenate($components);
     }
-    
+
     /**
      * Compile the "from" portion of the query.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  string  $table
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param string                             $table
+     *
      * @return string
      */
     protected function compileFrom(Builder $query, $table)
@@ -96,17 +96,18 @@ class ProgressGrammer extends Grammar
                 $value = trim($value);
             });
 
-            return 'from '.$this->getOwnerPrefix().'"'.$this->wrapTable($partialTable[0]).'" as ' . $partialTable[1];
+            return 'from '.$this->getOwnerPrefix().'"'.$this->wrapTable($partialTable[0]).'" as '.$partialTable[1];
         } else {
-            return 'from '.$this->getOwnerPrefix().'"'.$this->wrapTable($table).'" as ' . str_replace('-', '_', $table);
+            return 'from '.$this->getOwnerPrefix().'"'.$this->wrapTable($table).'" as '.str_replace('-', '_', $table);
         }
     }
 
     /**
      * Compile the "select *" portion of the query.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $columns
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param array                              $columns
+     *
      * @return string|null
      */
     protected function compileColumns(Builder $query, $columns)
@@ -114,7 +115,7 @@ class ProgressGrammer extends Grammar
         // If the query is actually performing an aggregating select, we will let that
         // compiler handle the building of the select clauses, as it will need some
         // more syntax that is best handled by that function to keep things neat.
-        if (! is_null($query->aggregate)) {
+        if (!is_null($query->aggregate)) {
             return;
         }
 
@@ -123,26 +124,29 @@ class ProgressGrammer extends Grammar
         if ($query->limit) {
             $select .= 'top '.$query->limit.' ';
         }
-       
+
         return $select.$this->columnize($columns);
     }
 
     /**
      * Convert an array of column names into a delimited string.
      *
-     * @param  array   $columns
+     * @param array $columns
+     *
      * @return string
      */
     public function columnize(array $columns)
     {
         $columns = array_map([$this, 'wrap'], $columns);
+
         return implode(', ', array_map([$this, 'escapeMinusSign'], $columns));
     }
 
     /**
-     * escapes strings  with a minus sign in it
+     * escapes strings  with a minus sign in it.
      *
-     * @param string   $value
+     * @param string $value
+     *
      * @return string
      */
     public function escapeMinusSign($value)
@@ -156,13 +160,13 @@ class ProgressGrammer extends Grammar
                 $columnPartials = explode('.', $value);
 
                 return  $this->columnConversion ?
-                        $columnPartials[0].'."'.$columnPartials[1].'" as ' . str_replace('-', '_', $columnPartials[1]) : 
-                        $columnPartials[0].'."'.$columnPartials[1].'"';            
+                        $columnPartials[0].'."'.$columnPartials[1].'" as '.str_replace('-', '_', $columnPartials[1]) :
+                        $columnPartials[0].'."'.$columnPartials[1].'"';
             } else {
                 // Just set the escaping no aliasing found
-                return  $this->columnConversion ? 
-                        '"' . $value . '" as ' . str_replace('-', '_', $value) : 
-                        '"' . $value . '"';
+                return  $this->columnConversion ?
+                        '"'.$value.'" as '.str_replace('-', '_', $value) :
+                        '"'.$value.'"';
             }
         }
 
@@ -172,22 +176,23 @@ class ProgressGrammer extends Grammar
     /**
      * Compile the "join" portions of the query.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $joins
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param array                              $joins
+     *
      * @return string
      */
     protected function compileJoins(Builder $query, $joins)
     {
         return collect($joins)->map(function ($join) use ($query) {
             if (strpos($join->table, ' as ') === false) {
-                $table = $this->getOwnerPrefix() . '"'.$this->wrapTable($join->table).'" as ' . str_replace('-', '_', $join->table);
+                $table = $this->getOwnerPrefix().'"'.$this->wrapTable($join->table).'" as '.str_replace('-', '_', $join->table);
             } else {
                 $partialTable = explode('as', $join->table);
                 array_walk($partialTable, function (&$value, $key) {
                     $value = trim($value);
                 });
 
-                $table = $this->getOwnerPrefix() . '"'.$this->wrapTable($partialTable[0]).'" as ' . $partialTable[1];
+                $table = $this->getOwnerPrefix().'"'.$this->wrapTable($partialTable[0]).'" as '.$partialTable[1];
             }
 
             $nestedJoins = is_null($join->joins) ? '' : ' '.$this->compileJoins($query, $join->joins);
@@ -201,21 +206,23 @@ class ProgressGrammer extends Grammar
     /**
      * Compile a where clause comparing two columns..
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $where
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param array                              $where
+     *
      * @return string
      */
     protected function whereColumn(Builder $query, $where)
     {
         if (strpos($where['first'], '-') !== false) {
             $partialColumn = explode('.', $where['first']);
-            $where['first'] = $partialColumn[0] . '."' . $partialColumn[1] . '"';
+            $where['first'] = $partialColumn[0].'."'.$partialColumn[1].'"';
         }
 
         if (strpos($where['second'], '-') !== false) {
             $partialColumn = explode('.', $where['second']);
-            $where['second'] = $partialColumn[0] . '."' . $partialColumn[1] . '"';
+            $where['second'] = $partialColumn[0].'."'.$partialColumn[1].'"';
         }
+
         return $where['first'].' '.$where['operator'].' '.$where['second'];
     }
 
@@ -240,9 +247,10 @@ class ProgressGrammer extends Grammar
     }
 
     /**
-     * Set the owner of the tables (This will be prefixxed before the tables)
+     * Set the owner of the tables (This will be prefixxed before the tables).
      *
      * @param string $owner
+     *
      * @return void
      */
     public function setOwner(string $owner)
@@ -251,9 +259,10 @@ class ProgressGrammer extends Grammar
     }
 
     /**
-     * Set the owner of the tables (This will be prefixxed before the tables)
+     * Set the owner of the tables (This will be prefixxed before the tables).
      *
      * @param bool $conversion
+     *
      * @return void
      */
     public function setColumnConversion(bool $conversion)
@@ -262,7 +271,7 @@ class ProgressGrammer extends Grammar
     }
 
     /**
-     * Returns a formatted owner prefix
+     * Returns a formatted owner prefix.
      *
      * @return string
      */
