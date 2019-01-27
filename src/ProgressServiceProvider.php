@@ -3,10 +3,6 @@
 namespace Noxxie\Database\Progress;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Connection;
-
-use Noxxie\Database\Progress\ProgressConnector;
-use Noxxie\Database\Progress\ProgressConnection;
 
 class ProgressServiceProvider extends ServiceProvider
 {
@@ -34,8 +30,9 @@ class ProgressServiceProvider extends ServiceProvider
                 continue;
             }
 
-            $this->app['db']->extend($conn, function($config, $name) {
+            $this->app['db']->extend($conn, function ($config, $name) {
                 $connector = new ProgressConnector();
+
                 return new ProgressConnection($connector->connect($config), null, null, $config);
             });
         }
