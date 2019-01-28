@@ -16,7 +16,7 @@ Progress is a simple odbc progress service provider for Laravel. It provides odb
 Add Progress to your composer.json file:
 ```
 "require": {
-    "noxxie/progress": "~1.0"
+    "noxxie/progress-laravel": "^1.0"
 }
 ```
 Use [composer](http://getcomposer.org) to install this package.
