@@ -16,23 +16,15 @@ use this package. I found out [This website](https://blog.zedfox.us/installing-o
 - [Usage](#usage)
 
 ## Installation
-Add Progress to your composer.json file:
+
+Add the library using composer:
 ```
-"require": {
-    "noxxie/laravel-db-progress": "^1.0"
-}
-```
-Use [composer](http://getcomposer.org) to install this package.
-```
-$ composer update
+composer require "noxxie/laravel-db-progress"
 ```
 
 ### Configuration
-You can put your Progress credentials into ``app/config/database.php`` file.
-
-#### Configure Progress using ``app/config/database.php`` file
-Simply add this code at the end of your ``app/config/database.php`` file:
-
+You can put your Progress credentials into ``app/config/database.php`` file
+using the following php lines:
 ```php
     'progress' => [
         'driver' => 'progress',
@@ -45,6 +37,8 @@ Simply add this code at the end of your ``app/config/database.php`` file:
         'schema' =>  env('PROGRESS_DB_SCHEMA', 'PUB'),
     ],
 ```
+
+As you can see there is also room to define them in your `.env` file.
 
 ## Usage
 
