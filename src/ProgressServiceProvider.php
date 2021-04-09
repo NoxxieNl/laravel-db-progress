@@ -24,7 +24,7 @@ class ProgressServiceProvider extends ServiceProvider
     public function register()
     {
 
-        // Register the progress driver type
+        // Register the progress driver type.
         foreach (config('database.connections') as $conn => $config) {
             if (!isset($config['driver']) || $config['driver'] != 'progress') {
                 continue;
@@ -32,8 +32,13 @@ class ProgressServiceProvider extends ServiceProvider
 
             $this->app['db']->extend($conn, function ($config, $name) {
                 $connector = new ProgressConnector();
-
-                return new ProgressConnection($connector->connect($config), null, null, $config);
+                
+                return new ProgressConnection(
+                    $connector->connect($config), 
+                    $config['database'] ?? null, 
+                    $config['prefix'] ?? null, 
+                    $config,
+                );
             });
         }
     }

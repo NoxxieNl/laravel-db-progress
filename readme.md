@@ -1,10 +1,13 @@
-# Progress-Laravel
+# Laravel-Db-Progress
 [![Latest Stable Version](https://poser.pugx.org/noxxie/progress/v/stable)](https://packagist.org/packages/noxxie/progress)
 [![Total Downloads](https://poser.pugx.org/noxxie/progress/downloads)](https://packagist.org/packages/noxxie/progress)
 [![Latest Unstable Version](https://poser.pugx.org/noxxie/progress/v/unstable)](https://packagist.org/packages/noxxie/progress)
 [![License](https://poser.pugx.org/noxxie/progress/license)](https://packagist.org/packages/noxxie/progress)
 
-Progress-Laravel is a simple odbc progress service provider for Laravel. It provides odbc connection by extending the Illuminate Database component of the laravel framework. This package is primarily ment for **windows** OS. Although when configured correctly you can also use the odbc connection manager in Linux to use this package.
+Laravel-Db-Progress is a simple odbc progress service provider for Laravel. It provides odbc connection by extending the Illuminate Database component of the laravel framework. It also provides the grammer changes in order to let everything work.
+
+To connect to the Progress database we utilize the ODBC drivers provided from progress. These must be installed before you can
+use this package. I found out [This website](https://blog.zedfox.us/installing-openedge-sql-client-access-odbc-drivers-ubuntu/) contains all the information you need to install those drivers.
 
 ---
 
@@ -16,7 +19,7 @@ Progress-Laravel is a simple odbc progress service provider for Laravel. It prov
 Add Progress to your composer.json file:
 ```
 "require": {
-    "noxxie/progress-laravel": "^1.0"
+    "noxxie/laravel-db-progress": "^1.0"
 }
 ```
 Use [composer](http://getcomposer.org) to install this package.
@@ -33,22 +36,15 @@ Simply add this code at the end of your ``app/config/database.php`` file:
 ```php
     'progress' => [
         'driver' => 'progress',
-        'username' => '',
-        'password' => '',
-        'owner' => '',
-        'driverName' => '',
-        'options' => [
-            PDO::ATTR_CASE => PDO::CASE_LOWER
-        ]
+        'host' => env('PROGRESS_DB_HOST', 'localhost'),
+        'port' => env('PROGRESS_DB_PORT', 19204),
+        'database' => env('PROGRESS_DB_DATABASE', 'forge'),
+        'username' => env('PROGRESS_DB_USERNAME', 'forge'),
+        'password' => env('PROGRESS_DB_PASSWORD', ''),
+        'codepage' => env('PROGRESS_DB_CODEPAGE', 'ISO_8859_1'),
+        'schema' =>  env('PROGRESS_DB_SCHEMA', 'PUB'),
     ],
 ```
-
-- driver name must be `progress`
-- Username is your SQL username
-- Password is your SQL password
-- Owner specifies the owner scheme within progress (Example: `PUB`)
-- driverName can be left empty
-- Options, default option within Laravel here you can specify extra PDO options to be set when the database connection is made
 
 ## Usage
 
