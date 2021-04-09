@@ -32,11 +32,11 @@ class ProgressServiceProvider extends ServiceProvider
 
             $this->app['db']->extend($conn, function ($config, $name) {
                 $connector = new ProgressConnector();
-                
+
                 return new ProgressConnection(
-                    $connector->connect($config), 
-                    $config['database'] ?? null, 
-                    $config['prefix'] ?? null, 
+                    $connector->connect($config),
+                    $config['database'] ?? null,
+                    $config['prefix'] ?? null,
                     $config,
                 );
             });
