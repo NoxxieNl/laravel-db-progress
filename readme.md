@@ -1,8 +1,8 @@
 # Laravel-Db-Progress
-[![Latest Stable Version](https://poser.pugx.org/noxxie/progress/v/stable)](https://packagist.org/packages/noxxie/progress)
-[![Total Downloads](https://poser.pugx.org/noxxie/progress/downloads)](https://packagist.org/packages/noxxie/progress)
-[![Latest Unstable Version](https://poser.pugx.org/noxxie/progress/v/unstable)](https://packagist.org/packages/noxxie/progress)
-[![License](https://poser.pugx.org/noxxie/progress/license)](https://packagist.org/packages/noxxie/progress)
+
+[![Latest Stable Version](https://img.shields.io/github/v/release/noxxie/laravel-db-progress.svg?style=flat-square)](https://packagist.org/packages/noxxie/laravel-db-progress)
+[![Total Downloads](https://img.shields.io/packagist/dt/oxxie/laravel-db-progres.svg?style=flat-square)](https://packagist.org/packages/noxxie/laravel-db-progress)
+[![License](https://img.shields.io/github/license/noxxie/laravel-db-progress)](https://packagist.org/packages/noxxie/laravel-db-progress)
 
 Laravel-Db-Progress is a simple odbc progress service provider for Laravel. It provides odbc connection by extending the Illuminate Database component of the laravel framework. It also provides the grammer changes in order to let everything work.
 
