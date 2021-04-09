@@ -22,14 +22,15 @@ class ProgressGrammer extends Grammar
         // Check if we end with a dot if not add the dot at the end.
         if (isset($config['schema'])) {
             $this->schema = Str::finish($config['schema'], '.');
-        }    
+        }
     }
 
     /**
      * Compile the "from" portion of the query.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  string  $table
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param string                             $table
+     *
      * @return string
      */
     protected function compileFrom(Builder $query, $table)
@@ -40,8 +41,9 @@ class ProgressGrammer extends Grammar
     /**
      * Compile the "limit" portions of the query.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  int  $limit
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param int                                $limit
+     *
      * @return string
      */
     protected function compileLimit(Builder $query, $limit)
@@ -52,8 +54,9 @@ class ProgressGrammer extends Grammar
     /**
      * Compile the "select *" portion of the query.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $columns
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param array                              $columns
+     *
      * @return string|null
      */
     protected function compileColumns(Builder $query, $columns)
@@ -61,7 +64,7 @@ class ProgressGrammer extends Grammar
         // If the query is actually performing an aggregating select, we will let that
         // compiler handle the building of the select clauses, as it will need some
         // more syntax that is best handled by that function to keep things neat.
-        if (! is_null($query->aggregate)) {
+        if (!is_null($query->aggregate)) {
             return;
         }
 
@@ -73,7 +76,7 @@ class ProgressGrammer extends Grammar
 
         if ($query->limit) {
             // Only use the TOP sql when there is no OFFSET specified, otherwise we get errors.
-            if (! isset($query->offset)) {
+            if (!isset($query->offset)) {
                 $select .= 'top '.(int) $query->limit.' ';
             }
         }
@@ -84,8 +87,9 @@ class ProgressGrammer extends Grammar
     /**
      * Compile the "join" portions of the query.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $joins
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param array                              $joins
+     *
      * @return string
      */
     protected function compileJoins(Builder $query, $joins)
@@ -103,7 +107,8 @@ class ProgressGrammer extends Grammar
 
     /**
      * @param \Illuminate\Database\Query\Builder $query
-     * @param mixed $offset
+     * @param mixed                              $offset
+     *
      * @return void
      */
     protected function compileOffset(Builder $query, $offset)

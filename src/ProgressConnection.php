@@ -8,12 +8,11 @@ use PDO;
 
 class ProgressConnection extends Connection
 {
-
     /**
-     * @param \PDO $pdo
+     * @param \PDO   $pdo
      * @param string $database
      * @param string $tablePrefix
-     * @param array $config
+     * @param array  $config
      */
     public function __construct(PDO $pdo, $database = '', $tablePrefix = '', array $config = [])
     {
@@ -36,6 +35,4 @@ class ProgressConnection extends Connection
 
         return $this->withTablePrefix($defaultGrammar);
     }
-
-
 }

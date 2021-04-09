@@ -17,7 +17,9 @@ class ProgressConnector extends Connector implements ConnectorInterface
         // First we'll create the basic DSN and connection instance connecting to the
         // using the configuration option specified by the developer.
         $connection = $this->createConnection(
-            $this->getDsn($config), $config, $this->getOptions($config)
+            $this->getDsn($config),
+            $config,
+            $this->getOptions($config)
         );
 
         return $connection;
@@ -34,12 +36,11 @@ class ProgressConnector extends Connector implements ConnectorInterface
         // in the configuration options. This will give us the basic DSN we will
         // need to establish the PDO connections and return them back for use.
         extract($config, EXTR_SKIP);
-        
-        $dsn = "odbc:".
-               "Driver=".($systemdriver ?? 'Progress').
-               ";DatabaseName=".($database ?? '').
-               ";Hostname=".($host ?? '');
 
+        $dsn = 'odbc:'.
+               'Driver='.($systemdriver ?? 'Progress').
+               ';DatabaseName='.($database ?? '').
+               ';Hostname='.($host ?? '');
 
         // If a port was specified, we will add it to this Progress DSN connections
         // format.
@@ -60,7 +61,8 @@ class ProgressConnector extends Connector implements ConnectorInterface
     /**
      * Format the schema for the DSN.
      *
-     * @param  array|string  $schema
+     * @param array|string $schema
+     *
      * @return string
      */
     protected function formatSchema($schema)
